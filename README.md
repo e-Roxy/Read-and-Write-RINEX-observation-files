@@ -6,7 +6,7 @@ This script create a class called RNX, with 3 parameters: RINEX version, Observa
 Go to the terminal, go to the script directory, type "python RNX.py /yourRINEXfileDIRECTORY/YourRINEXfile"
 You will have in the output all the parameters as listed above
 
-Important:
+###### Important:
       1- Class def:
            class RNX:
             def __init__(self,version, ConstellationObservables, EpochPrnData):
