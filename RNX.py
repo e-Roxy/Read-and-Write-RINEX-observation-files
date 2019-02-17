@@ -1,3 +1,9 @@
+import numpy as np
+import sys
+import os.path
+
+
+
 #Directory of RINEX FILE
 RINEX = sys.argv[1]
 
@@ -9,7 +15,10 @@ class RNX:
     self.ConstellationObservables = ConstellationObservables
     self.EpochPrnData = EpochPrnData
     
-    
+#Name: RINEX3CONSTOBS
+#Purpose: from a RINEX obs File extraxt the constellation and the observables as a dictionnary and give 
+##########the index of the line when the header ends
+
 def RINEX3CONSTOBS(obs):
     # Initialization of the output dictionary
     ConstellationObservables = dict()
@@ -22,7 +31,8 @@ def RINEX3CONSTOBS(obs):
 
         # Read lines of files
         obsLines = obsFd.readlines()
-
+	#version
+	version = obsLines[0].split()[0]
         # Initialisation of the list containing the observables the will be the value
         Observables = []
 
@@ -56,12 +66,15 @@ def RINEX3CONSTOBS(obs):
                         Observables = Observables + (obsLine1[6:60]).split()
 
                         ConstellationObservables[obsLine1[0]] = (obsLine1[6:60]).split()
+		
                     # End of if " 2 lines check"
                 # End of if "SYS / # / OBS TYPES"
             # End of end of header check
 
-    return ConstellationObservables, counter
-   
+    return ConstellationObservables, counter, version
+
+#Name : func
+#Purpose: return a dictionnary with epochs as keys and the values are dictionnries with prns as keys and the values are the observations
 def ConvertRnxToDict(obs):
 	Rinex2Dict = dic()
 	counter = RINEX3CONSTOBS(file)[1]
@@ -86,6 +99,11 @@ def ConvertRnxToDict(obs):
 					
 			 	LineCounter = LineCounter + Numsat + 1
 	return Rinex2Dict
+
+
+constObs,ver= RINEX3CONSTOBS(RINEX)[0],RINEX3CONSTOBS(RINEX)[2]
+EpchprnData = ConvertRnxToDict(RINEX)
+Output = RNX(ver,constObs,EpchprnData)
 
 				
 				
