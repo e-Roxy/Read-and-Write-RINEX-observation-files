@@ -1,6 +1,6 @@
 # Read-and-Write-RINEX-observation-files
-Convert RINEX data files to a dictionnary easy to use
-This script create a class called RNX, with 3 parameters: RINEX version, Observales, and the body data.
+Convert RINEX data files to a dictionnary easy to use.
+This script, creates a class called RNX, with 3 parameters: RINEX version, Observales, and the body data.
 
 ###### To launch the script
 Go to the terminal, go to the script directory, type "python RNX.py /yourRINEXfileDIRECTORY/YourRINEXfile"
