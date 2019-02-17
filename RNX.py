@@ -61,26 +61,32 @@ def RINEX3CONSTOBS(obs):
             # End of end of header check
 
     return ConstellationObservables, counter
-    
+   
 def ConvertRnxToDict(obs):
-Rinex2Dict = dic()
-  with open(RINEX,'r+') as fd:
-	  lines = fd.readlines()
-	  LineCounter = 0
-	  while LineCounter < len(lines):
-		  if ">" == lines[LineCounter][0]:
-			  EpochSec  = float(lines[LineCounter].split()[])
-			  EpochMin  = float(lines[LineCounter].split()[])
-			  EpochHour = float(lines[LineCounter].split()[])
-			  Epoch     = EpochSec + 60.0*EpochMin + 60.0*60.0*EpochHour
-			  NumSat    = int(lines[LineCounter].split()[])
-			  Rinex2Dict[Epoch]=dict()
-			  LineInEpochCounter = 1
-			  while LineInEpochCounter < NumSat+1:
-				  PRN  = lines[LineInEpochCounter+LineCounter].split()[0]
-				  Data = lines[LineInEpochCounter+LineCounter].split()[1:]
-				  Rinex2Dict[Epoch][PRN] = Data
+	Rinex2Dict = dic()
+	counter = RINEX3CONSTOBS(file)[1]
+  	with open(RINEX,'r+') as fd:
+	  	lines = fd.readlines()
+	  	LineCounter = counter
+	  	while LineCounter < len(lines):
+		  	if ">" == lines[LineCounter][0]:
+			  	EpochSec  = float(lines[LineCounter].split()[6])
+			  	EpochMin  = float(lines[LineCounter].split()[5])
+			  	EpochHour = float(lines[LineCounter].split()[4])
+			  	Epoch     = EpochSec + 60.0*EpochMin + 60.0*60.0*EpochHour
+			  	NumSat    = int(lines[LineCounter].split()[8])
+			  	Rinex2Dict[Epoch]=dict()
+			  	LineInEpochCounter = 1
+			  	while LineInEpochCounter < NumSat+1:
+				
+			  		PRN  = lines[LineInEpochCounter+LineCounter].split()[0]
+					Data = lines[LineInEpochCounter+LineCounter].split()[1:]
+					Rinex2Dict[Epoch][PRN] = Data
+					LineInEpochCounter+=1
+					
+			 	LineCounter = LineCounter + Numsat + 1
+	return Rinex2Dict
+
 				
 				
-OutPutRinex = RNX()
-	
+				
