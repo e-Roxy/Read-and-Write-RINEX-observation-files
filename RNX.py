@@ -12,8 +12,8 @@ RINEX = sys.argv[1]
 class RNX:
   def __init__(self,version, ConstellationObservables, EpochPrnData):
 	self.version = version
-    self.ConstellationObservables = ConstellationObservables
-    self.EpochPrnData = EpochPrnData
+    	self.ConstellationObservables = ConstellationObservables
+    	self.EpochPrnData = EpochPrnData
     
 #Name: RINEX3CONSTOBS
 #Purpose: from a RINEX obs File extraxt the constellation and the observables as a dictionnary and give 
@@ -76,7 +76,7 @@ def RINEX3CONSTOBS(obs):
 #Name : func
 #Purpose: return a dictionnary with epochs as keys and the values are dictionnries with prns as keys and the values are the observations
 def ConvertRnxToDict(obs):
-	Rinex2Dict = dic()
+	Rinex2Dict = dict()
 	counter = RINEX3CONSTOBS(file)[1]
   	with open(RINEX,'r+') as fd:
 	  	lines = fd.readlines()
@@ -97,7 +97,7 @@ def ConvertRnxToDict(obs):
 					Rinex2Dict[Epoch][PRN] = Data
 					LineInEpochCounter+=1
 					
-			 	LineCounter = LineCounter + Numsat + 1
+			 	LineCounter = LineCounter + NumSat + 1
 	return Rinex2Dict
 
 
